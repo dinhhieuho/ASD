@@ -148,8 +148,10 @@ public class Lab2 extends javax.swing.JFrame
 		    Swimmer swimmer= (Swimmer)vectorlist.elementAt(x);
 		    JTextArea1.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		for(Swimmer s = (Swimmer)iter.First(); iter.hasNext();) {
+		Swimmer s = (Swimmer)iter.First();
+		while(iter.hasNext()) {
 			JTextArea1.append(s.getFname()+" "+s.getLname()+ " \n");
+			s = (Swimmer)iter.Next();
 		}
 	}
 
@@ -160,8 +162,10 @@ public class Lab2 extends javax.swing.JFrame
 		    Swimmer swimmer= (Swimmer)vectorlist.elementAt(x);
 		    JTextArea2.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		for(Swimmer s = (Swimmer)iter.End(); iter.hasPrevious();) {
-			JTextArea1.append(s.getFname()+" "+s.getLname()+ " \n");
+		Swimmer s = (Swimmer)iter.End();
+		while(iter.hasPrevious()) {
+			JTextArea2.append(s.getFname()+" "+s.getLname()+ " \n");
+			s = (Swimmer)iter.Previous();
 		}
 			 
 	}
@@ -174,8 +178,12 @@ public class Lab2 extends javax.swing.JFrame
 		    if (swimmer.getAge()>=12)
 		       JTextArea3.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		for(Swimmer s = (Swimmer)iter.First(); iter.hasNext() && s.getAge()>=12;) {
-			JTextArea1.append(s.getFname()+" "+s.getLname()+ " \n");
+		Swimmer s = (Swimmer)iter.First();
+		while(iter.hasNext()) {
+			if(s.getAge()>=12) {
+				JTextArea3.append(s.getFname()+" "+s.getLname()+ " \n");
+			}
+			s = (Swimmer)iter.Next();
 		}
 	}
 }
