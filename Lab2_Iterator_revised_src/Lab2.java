@@ -1,15 +1,19 @@
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.util.ArrayList;
 
 /**
  * A basic JFC 1.1 based application.    
  */
 public class Lab2 extends javax.swing.JFrame
 {
-    private Collection slist = new SwimmerCollection();
-    private Iterator iter;
+	private java.util.List<Swimmer> sList;
+    private Collection swimmerColl;
+    private Iterator reverseIter;
+    private Iterator prdictedIter;
     
 	public Lab2()   
 	{
@@ -51,7 +55,9 @@ public class Lab2 extends javax.swing.JFrame
 		JScrollPane3.getViewport().add(JTextArea3);
 		JTextArea3.setBounds(0,0,176,200);
 		
-		iter = slist.CreateIterator();
+		sList = createData();
+		swimmerColl = new SwimmerCollection(sList);
+		
 
 		SymWindow aSymWindow = new SymWindow();
 		this.addWindowListener(aSymWindow);
@@ -148,10 +154,11 @@ public class Lab2 extends javax.swing.JFrame
 		    Swimmer swimmer= (Swimmer)vectorlist.elementAt(x);
 		    JTextArea1.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		Swimmer s = (Swimmer)iter.First();
-		while(iter.hasNext()) {
+		//The first panel is just a simple iterator, and can use the standard Java iterator() method
+		java.util.Iterator<Swimmer> iterJava = sList.iterator();
+		while(iterJava.hasNext()) {
+			Swimmer s = iterJava.next();
 			JTextArea1.append(s.getFname()+" "+s.getLname()+ " \n");
-			s = (Swimmer)iter.Next();
 		}
 	}
 
@@ -162,12 +169,12 @@ public class Lab2 extends javax.swing.JFrame
 		    Swimmer swimmer= (Swimmer)vectorlist.elementAt(x);
 		    JTextArea2.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		Swimmer s = (Swimmer)iter.End();
-		while(iter.hasPrevious()) {
+		
+		reverseIter = swimmerColl.createReverseIterator(); 
+		while(reverseIter.hasNext()) {
+			Swimmer s = (Swimmer)reverseIter.next();
 			JTextArea2.append(s.getFname()+" "+s.getLname()+ " \n");
-			s = (Swimmer)iter.Previous();
 		}
-			 
 	}
 
 	void JButtonAllAbove12_actionPerformed(java.awt.event.ActionEvent event)
@@ -178,12 +185,34 @@ public class Lab2 extends javax.swing.JFrame
 		    if (swimmer.getAge()>=12)
 		       JTextArea3.append(swimmer.getFname()+" "+swimmer.getLname()+ " \n");
 		}*/
-		Swimmer s = (Swimmer)iter.First();
-		while(iter.hasNext()) {
-			if(s.getAge()>=12) {
-				JTextArea3.append(s.getFname()+" "+s.getLname()+ " \n");
-			}
-			s = (Swimmer)iter.Next();
+		prdictedIter = swimmerColl.createIterator(12); 
+		while(prdictedIter.hasNext()) {
+			Swimmer s = (Swimmer)prdictedIter.next();
+			JTextArea3.append(s.getFname()+" "+s.getLname()+ " \n");
 		}
 	}
+	private java.util.List<Swimmer> createData(){
+        
+		java.util.List<Swimmer> swimmerList = new ArrayList<Swimmer>();
+        Swimmer pswim = new Swimmer ("Amanda", "McCarthy","WCA",12,28.10);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Jamie", "Falco","HNHS",12,29.80);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Meaghan", "O'Donnell","EDST",12,30.00);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Greer", "Gibbs","CDEV",11,30.04);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Rhiannon", "Jeffrey","WYW",12,30.04);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Sophie", "Connolly","HNHS",11,30.11);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Dana", "Helyer","EDST",12,30.20);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Lindsay", "Marotto","CDEV",11,30.22);
+        swimmerList.add(pswim);
+        pswim = new Swimmer ("Sarah", "Treichel","WCA",12,30.34);
+        swimmerList.add(pswim);
+        
+        return swimmerList;
+    }
 }

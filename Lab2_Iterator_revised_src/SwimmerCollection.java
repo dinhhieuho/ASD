@@ -1,46 +1,46 @@
+import java.util.List;
 
 public class SwimmerCollection implements Collection {
 	
-	static final int MAX_ITEMS = 9;
-	Swimmer[] swimmerList;
+	//static final int MAX_ITEMS = 9;
+	List<Swimmer> data;
 	int count = 0;
-	public SwimmerCollection() {
-		swimmerList = new Swimmer[MAX_ITEMS];
-		FillData();
+	public SwimmerCollection(List<Swimmer> data) {
+		this.data = data;
 	}
-	public Iterator CreateIterator() {
+	public Iterator createIterator() {
 		// TODO Auto-generated method stub
-		return new SwimmerIterator(swimmerList);
+		return new SwimmerIterator(FillData(false, 0));
 	}
-	private void addItem(Swimmer s) {
-		if(count >= MAX_ITEMS) {
-			System.err.print("Full");
-		}
-		else {
-			swimmerList[count] = s;
-			count++;
-		}
+	public Iterator createIterator(int prediction) {
+		// TODO Auto-generated method stub
+		return new SwimmerIterator(FillData(false, prediction));
 	}
-	private void FillData(){
-        
-        Swimmer pswim = new Swimmer ("Amanda", "McCarthy","WCA",12,28.10);
-        addItem(pswim);
-        pswim = new Swimmer ("Jamie", "Falco","HNHS",12,29.80);
-        addItem(pswim);
-        pswim = new Swimmer ("Meaghan", "O'Donnell","EDST",12,30.00);
-        addItem(pswim);
-        pswim = new Swimmer ("Greer", "Gibbs","CDEV",11,30.04);
-        addItem(pswim);
-        pswim = new Swimmer ("Rhiannon", "Jeffrey","WYW",12,30.04);
-        addItem(pswim);
-        pswim = new Swimmer ("Sophie", "Connolly","HNHS",11,30.11);
-        addItem(pswim);
-        pswim = new Swimmer ("Dana", "Helyer","EDST",12,30.20);
-        addItem(pswim);
-        pswim = new Swimmer ("Lindsay", "Marotto","CDEV",11,30.22);
-        addItem(pswim);
-        pswim = new Swimmer ("Sarah", "Treichel","WCA",12,30.34);
-        addItem(pswim);
-        
+	public Iterator createReverseIterator() {
+		// TODO Auto-generated method stub
+		return new SwimmerIterator(FillData(true, 0));
+	}
+	private Swimmer[] FillData(boolean reverse, int predictionAge){
+		Swimmer swimmerList[] = new Swimmer[data.size()];
+		int count = 0;
+		if(reverse==false) {
+			for(int i=0;i<data.size();i++) {
+				Swimmer s = data.get(i);
+				if(s.getAge()>=predictionAge) {
+					swimmerList[count] = data.get(i);
+					count++;
+				}
+			}
+		}
+		else{
+			for(int i=data.size()-1;i>=0;i--) {
+				Swimmer s = data.get(i);
+				if(s.getAge()>=predictionAge) {
+					swimmerList[count] = data.get(i);
+					count++;
+				}
+			}
+		}
+		return swimmerList;
     }
 }

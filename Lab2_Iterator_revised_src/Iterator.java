@@ -1,10 +1,6 @@
 
 public interface Iterator {
-	public Object First();
-	public Object End();
-	public Object Next();
-	public Object Previous();
+	public Object next();
 	public boolean hasNext();
-	public boolean hasPrevious();
-	public Object CurrentItem();
+	public Object currentItem();
 }
